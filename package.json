@@ -30,8 +30,10 @@
     "body-parser": "^1.14.1",
     "ejs": "^2.3.4",
     "express": "^4.13.3",
+    "mysql": "^2.9.0",
     "nodemon": "^1.8.1",
-    "path": "^0.12.7"
+    "path": "^0.12.7",
+    "sequelize": "^3.14.1"
   },
   "devDependencies": {
     "mocha": "^2.3.4",
