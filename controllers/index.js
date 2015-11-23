@@ -5,12 +5,14 @@ var express = require('express')
     , router = express.Router()
     , Comment = require('../models/comment');
 
-router.use('/comments', require('./comments'));
-router.use('/users', require('./users'));
-
+router.route('/comments', require('./comments'));
+router.route('/users', require('./users'));
 
 router.get('/', function(req, res){
     Comment.all(function(err, comments){
         res.render('index', {comments: comments});
-    })
+    });
 });
+
+
+module.exports = router;
