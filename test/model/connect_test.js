@@ -5,7 +5,7 @@ var dsn = 'mysql://root:@127.0.0.1:3306/skeleton_db';
 
 
 describe('MySQL test:', function(){
-    it('Connectivity', function(done){
+    it('Connectivity', function(){
         try{
             var sequelize = new Sequelize(dsn);
         } catch(e) {
@@ -14,7 +14,8 @@ describe('MySQL test:', function(){
         assert.equal(typeof sequelize, 'object');
     });
 
-    it('Create table', function(done){
+    it('Create table', function(){
+
         var sequelize = new Sequelize(dsn);
 
         try{
