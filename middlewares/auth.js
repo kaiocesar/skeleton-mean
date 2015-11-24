@@ -3,9 +3,11 @@
  */
 
 module.exports = function(req, res, next){
-    if (req.user){
-        next();
+    if (req.isAuthenticated()){
+        res.send('ok');
+        //next();
     } else {
-        res.status(401).end();
+        res.redirect('/login');
+        //res.status(401).end();
     }
 };

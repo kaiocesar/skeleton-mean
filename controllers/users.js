@@ -3,9 +3,10 @@
  */
 
 var express = require('express')
-    , router = express.Router();
+    , router = express.Router()
+    , auth = require('../middlewares/auth');
 
-router.get('/', function(req, res){
+router.get('/', auth, function(req, res){
     res.send('List all users');
 });
 
