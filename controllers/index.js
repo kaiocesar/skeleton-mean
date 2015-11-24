@@ -37,6 +37,17 @@ module.exports = function(passport){
         failureFlash : true
     }));
 
+    router.get('/profile', auth, function(req, res){
+       res.send('Welcome to Profile user');
+    });
+
+
+    router.get('/logout', function(req, res){
+        req.logout();
+        res.redirect('/login');
+    });
+
+
 
     return router;
 
