@@ -1,5 +1,8 @@
 <h1>Login page</h1>
 
+{% if (message.length > 0) %}
+    <div class="alert alert-danger">{{message}}</div>
+{% endif %}
 
 <form action="/login" method="post">
     <div class="form-group">

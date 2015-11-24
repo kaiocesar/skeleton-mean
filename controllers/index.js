@@ -20,8 +20,15 @@ module.exports = function(passport){
     });
 
     router.get('/login', function(req, res){
-        res.render('login');
+        res.render('login', {message: req.flash('loginMessage')});
     });
+
+
+    router.post('/login', passport.authenticate('local-login', {
+        successRedirect : '/profile',
+        failureRedirect : '/login',
+        failureFlash : true
+    }));
 
 
     router.post('/signup', passport.authenticate('local-signup',{

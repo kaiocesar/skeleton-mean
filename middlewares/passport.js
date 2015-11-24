@@ -3,13 +3,13 @@
  */
 
 
-
-var LocalStrategy = require('passport-local').Strategy;
-
-var User = require('../models/user.js');
-
-
 module.exports = function(passport){
+
+
+    var LocalStrategy = require('passport-local').Strategy;
+
+    var User = require('../models/user');
+
     passport.serializeUser(function(user, done){
         done(null, user.id);
     });
@@ -21,38 +21,38 @@ module.exports = function(passport){
     });
 
 
-    //signup
+    // local signup
     passport.use('local-signup', new LocalStrategy({
-       usernameField: 'email',
-        passwordField: 'password',
-        passReqToCallback:  true
-    },
-    function(req, email, password, done){
-        process.nextTick(function(){
-            User.find({'email': email}, function(err, user){
-               if (err){
-                   return done(err);
-               }
+            usernameField : 'email',
+            passwordField : 'password',
+            passReqToCallback : true
+        },
+        function(req, email, password, done) {
+            process.nextTick(function(){
+                User.findOne({'email':email}, function(err,user){
+                    if (err)
+                        return done(err);
 
-               if (user){
-                    return done(null, false, req.flash('signupMessage', 'That email is already taken.'));
-               } else {
-                   var newUser = new User();
-                   newUser.email = email;
-                   newUser.password = newUser.generateHash(password);
+                    if (user) {
+                        return done(null, false, req.flash('signupMessage','That email is already taken.'));
+                    } else {
+                        var newUser = new User();
+                        newUser.email = email;
+                        newUser.password = newUser.generateHash(password);
+                        newUser.name_real = 'kaio';  //req.body.name;
+                        newUser.status = false;
 
-                   newUser.save(function(err){
-                       if (err){
-                           throw err;
-                       }
-                       return done(null, newUser);
-                   });
-               }
+                        // save the user
+                        newUser.save(function(err){
+                            if (err)
+                                throw err;
+                            return done(null, newUser);
+                        });
+                    }
+                });
             });
-        });
-    }
+        }
     ));
-
 
 
 
@@ -63,28 +63,39 @@ module.exports = function(passport){
             passReqToCallback : true
         },
         function (req, email, password, done) {
+            try{
+
 
             User.findOne({'email' : email }, function(err, user) {
-                if (err)
+                if (err){
+                    console.log('err');
                     return done(err);
+                }
 
-                if (!user)
+                if (!user){
+                    console.log('not user')
                     return done(null, false, req.flash('loginMessage', 'No user found.'));
+                }
 
-                if (!user.validPassword(password))
+                if (!user.validPassword(password)){
+                    console.log('password invalid');
                     return done(null, false, req.flash('loginMessage', 'Oops Wrong password.'))
+                }
 
-                if (user.status === false)
+                if (user.status === false){
+                    console.log('status');
                     return done(null, false, req.flash('loginMessage','Check your email registration confirmation.'));
+                }
 
                 return done(null, user);
 
             });
+            } catch(e){
+                return e;
+            }
         }
     ));
 
-
     return passport;
-
 
 };
