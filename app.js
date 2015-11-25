@@ -15,13 +15,11 @@ var passport = require('passport')
     , session = require('express-session')
     , flash = require('connect-flash');
 
-
 app.engine('html', swig.renderFile);
 app.set('view engine', 'html');
 app.set('views', path.join(__dirname, 'views'));
 app.set('view cache', false);
 swig.setDefaults({cache: false});
-
 
 app.use(express.static(__dirname + '/public'));
 app.use(bodyparser.json());

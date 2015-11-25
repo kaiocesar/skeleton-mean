@@ -11,7 +11,7 @@ module.exports = function(passport){
         , passport = require('../middlewares/passport')(passport);
 
     router.use('/comments', require('./comments'));
-    router.use('/users', require('./users'));
+    router.use('/users',auth, require('./users'));
 
     router.get('/', function(req, res){
         Comment.all(function(err, comments){
