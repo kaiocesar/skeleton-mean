@@ -27,19 +27,16 @@ app.use(express.static(__dirname + '/public'));
 app.use(bodyparser.json());
 app.use(bodyparser.urlencoded({extended:true}));
 
+app.use(morgan('dev'));
+app.use(cookieParser()) ;
 
 i18n.configure({
-    locales: ['de', 'en', 'pt-br'],
+    locales: ['de', 'en', 'pt-br', 'es', 'fr'],
     defaultLocale: 'pt-br',
     directory: path.join(__dirname, 'views/locales'),
     cookie: 'langsys'
-
 });
-
 app.use(i18n.init);
-
-app.use(morgan('dev'));
-app.use(cookieParser()) ;
 
 app.use(session({secret: 'minhachavesecreta',saveUninitialized : true, resave: true}));
 app.use(passport.initialize());
