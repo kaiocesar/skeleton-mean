@@ -15,8 +15,13 @@ module.exports = function(passport){
 
     router.get('/', function(req, res){
         Comment.all(function(err, comments){
+            res.setLocale('pt-br');
             res.render('index', {comments: comments});
         });
+    });
+
+    router.get('/about', function(req, res){
+        res.render('about');
     });
 
     router.get('/login', function(req, res){
