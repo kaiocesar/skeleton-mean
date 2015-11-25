@@ -6,7 +6,8 @@ var express = require('express')
     , path = require('path')
     , port = process.env.PORT || 3000
     , bodyparser = require('body-parser')
-    , swig = require('swig');
+    , swig = require('swig')
+    , i18n = require('i18n');
 
 var passport = require('passport')
     , morgan = require('morgan')
@@ -19,10 +20,23 @@ app.engine('html', swig.renderFile);
 app.set('view engine', 'html');
 app.set('views', path.join(__dirname, 'views'));
 app.set('view cache', false);
+swig.setDefaults({cache: false});
+
 
 app.use(express.static(__dirname + '/public'));
 app.use(bodyparser.json());
 app.use(bodyparser.urlencoded({extended:true}));
+
+
+i18n.configure({
+    locales: ['de', 'en', 'pt-br'],
+    defaultLocale: 'pt-br',
+    directory: path.join(__dirname, 'views/locales'),
+    cookie: 'langsys'
+
+});
+
+app.use(i18n.init);
 
 app.use(morgan('dev'));
 app.use(cookieParser()) ;
