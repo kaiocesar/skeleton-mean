@@ -8,12 +8,16 @@ module.exports = function(passport){
         , router = express.Router()
         , Comment = require('../models/comment')
         , auth = require('../middlewares/auth')
-        , passport = require('../middlewares/passport')(passport);
+        , passport = require('../middlewares/passport')(passport)
+        , acl = require('acl');
 
     router.use('/comments', require('./comments'));
     router.use('/users',auth, require('./users'));
 
     router.get('/', function(req, res){
+
+        console.log(acl);
+
         Comment.all(function(err, comments){
             res.setLocale('pt-br');
             res.render('index', {comments: comments});

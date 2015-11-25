@@ -73,17 +73,14 @@ module.exports = function(passport){
                 }
 
                 if (!user){
-                    console.log('not user')
                     return done(null, false, req.flash('loginMessage', 'No user found.'));
                 }
 
                 if (!user.validPassword(password)){
-                    console.log('password invalid');
                     return done(null, false, req.flash('loginMessage', 'Oops Wrong password.'))
                 }
 
                 if (user.status === false){
-                    console.log('status');
                     return done(null, false, req.flash('loginMessage','Check your email registration confirmation.'));
                 }
 

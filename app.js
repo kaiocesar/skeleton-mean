@@ -13,7 +13,8 @@ var passport = require('passport')
     , morgan = require('morgan')
     , cookieParser = require('cookie-parser')
     , session = require('express-session')
-    , flash = require('connect-flash');
+    , flash = require('connect-flash')
+    ;
 
 app.engine('html', swig.renderFile);
 app.set('view engine', 'html');

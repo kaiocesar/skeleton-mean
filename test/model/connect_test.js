@@ -1,8 +1,7 @@
 var assert = require('assert');
 var Sequelize = require('sequelize');
-//var sequelize = new Sequelize('skeleton_db',  'root', '', {host:'127.0.0.1', dialect: 'mysql'});
 var dsn = 'mysql://root:@127.0.0.1:3306/skeleton_db';
-
+var MongoClient = require('mongodb').MongoClient;
 
 describe('MySQL test:', function(){
     it('Connectivity', function(){
@@ -49,4 +48,13 @@ describe('MySQL test:', function(){
         assert.equal(typeof userCreate, 'object');
 
     });
+
+    it('Connectiong to MongoDB', function(){
+        var dsn_mongo = 'mongodb://127.0.0.1:12027/skeleton';
+        MongoClient.connect(dsn_mongo, function(err, db){
+            assert.equal(null, err);
+            db.close();
+        });
+    });
+
 });
