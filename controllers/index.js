@@ -55,9 +55,11 @@ module.exports = function(passport){
     }));
 
     router.get('/profile',[auth, acl.checkPermissions('admin')], function(req, res){
-        //var ok = acl.middleware(1, "1", "*");
-        //console.log(ok);
        res.send('Welcome to Profile user');
+    });
+
+    router.get('/guest-secret', [auth, acl.checkPermissions('guest')], function(req, res){
+        res.send('Guest area');
     });
 
 

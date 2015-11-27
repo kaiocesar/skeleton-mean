@@ -7,22 +7,20 @@ var userModel = require('../models/user');
 
 module.exports.checkPermissions = function(role){
     return function(req, res, next){
-
         userModel.findOne({'_id': req.user._id, 'acl.role': role}, function(err, user){
            if (err){
                res.redirect('/login');
            } else {
-               if (typeof user == 'object'){
+               if (Object.prototype.toString.call(user) == '[object Object]'){
                    if (user._id.toString() == req.user._id.toString()){
                        next();
                    } else {
-                       res.redirect('/login');
+                       res.json('Invalid request');
                    }
                } else {
-                   res.redirect('/login');
+                   res.json('Invalid request');
                }
            }
-
         });
     }
 };
