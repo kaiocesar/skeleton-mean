@@ -13,8 +13,8 @@ var passport = require('passport')
     , morgan = require('morgan')
     , cookieParser = require('cookie-parser')
     , session = require('express-session')
-    , flash = require('connect-flash')
-    ;
+    , flash = require('connect-flash');
+
 
 app.engine('html', swig.renderFile);
 app.set('view engine', 'html');
@@ -39,6 +39,7 @@ app.use(cookieParser());
 app.use(morgan('dev'));
 
 app.use(i18n.init);
+
 
 
 app.use(session({secret: '8b2864a9c1da71b4ccefe6872e8b9594',saveUninitialized : true, resave: true}));

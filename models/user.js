@@ -27,6 +27,17 @@ userSchema.methods.validPassword = function(password) {
     return bcrypt.compareSync(password, this.password);
 };
 
+userSchema.methods.checkPermissions = function(user_id, callback){
+    userSchema.find({'_id': user_id}, function(err, user){
+        if (err){
+            callback(err, null);
+        } else {
+            callback(null, user);
+        }
+    });
+};
+
+
 
 // create the model for users and expose it to our app
 module.exports = mongoose.model('User', userSchema);

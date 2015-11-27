@@ -9,15 +9,23 @@ module.exports = function(passport){
         , Comment = require('../models/comment')
         , auth = require('../middlewares/auth')
         , passport = require('../middlewares/passport')(passport)
-        , acl = require('acl');
+        , acl = require('../middlewares/acl');
+
+        //, node_acl = require('acl')
+        //, acl
+        //, mongodb = require('mongodb');
+
+    //
+    //mongodb.connect( 'mongodb://127.0.0.1:27017/skeleton', function (err, db){
+    //    var mongoBackend = new node_acl.mongodbBackend( db /*, {String} prefix */ );
+    //    acl = new node_acl( mongoBackend);
+    //});
+
 
     router.use('/comments', require('./comments'));
     router.use('/users',auth, require('./users'));
 
     router.get('/', function(req, res){
-
-        console.log(acl);
-
         Comment.all(function(err, comments){
             res.setLocale('pt-br');
             res.render('index', {comments: comments});
@@ -46,7 +54,9 @@ module.exports = function(passport){
         failureFlash : true
     }));
 
-    router.get('/profile', auth, function(req, res){
+    router.get('/profile',[auth, acl.checkPermissions('admin')], function(req, res){
+        //var ok = acl.middleware(1, "1", "*");
+        //console.log(ok);
        res.send('Welcome to Profile user');
     });
 
