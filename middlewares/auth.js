@@ -9,8 +9,10 @@ module.exports = function(req, res, next){
         next();
         //if (req.url == '/profile'){
         //    var user = req.user;
-        //    var area = user.acl.role;
-        //    console.log(area);
+        //    //console.log(Object.prototype.toString.call(req.session.user));
+        //    //console.log(req.user.acl);
+        //    //var area = user.acl.role;
+        //    //console.log(area);
         //    //res.redirect('/'+area+'/profile');
         //} else {
         //    next();
